@@ -20,7 +20,7 @@ app.use(morgan("dev"));
 // Responder a todas as requisições OPTIONS com CORS
 app.options("*", cors());
 
-app.use("/api/auth", authRoutes);
+app.use("/api", authRoutes);
 app.use(errorHandler);
 
 export default app;
