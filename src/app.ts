@@ -1,6 +1,7 @@
 import express from "express";
 import { errorHandler } from "./middleware/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
+import pacienteRoutes from "./routes/pacienteRoutes";
 
 const app = express();
 const cors = require("cors");
@@ -20,7 +21,8 @@ app.use(morgan("dev"));
 // Responder a todas as requisições OPTIONS com CORS
 app.options("*", cors());
 
-app.use("/", authRoutes);
+app.use("/api/v1", authRoutes);
+app.use('/api/v1', pacienteRoutes);
 app.use(errorHandler);
 
 export default app;
