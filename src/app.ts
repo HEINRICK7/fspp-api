@@ -8,7 +8,7 @@ const morgan = require("morgan");
 // Configure CORS para permitir localhost e a URL de produção
 app.use(
   cors({
-    origin: ["https://fspp-kmbm.vercel.app/api/v1/login"],
+    origin: ["*"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -20,7 +20,7 @@ app.use(morgan("dev"));
 // Responder a todas as requisições OPTIONS com CORS
 app.options("*", cors());
 
-app.use("/api/v1", authRoutes);
+app.use("/", authRoutes);
 app.use(errorHandler);
 
 export default app;
