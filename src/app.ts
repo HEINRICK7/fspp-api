@@ -2,9 +2,9 @@ import express from "express";
 import { errorHandler } from "./middleware/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
 import pacienteRoutes from "./routes/pacienteRoutes";
+import cors from 'cors'
 
 const app = express();
-const cors = require("cors");
 const morgan = require("morgan");
 // Configure CORS para permitir localhost e a URL de produção
 app.use(cors({
