@@ -8,7 +8,10 @@ const cors = require("cors");
 const morgan = require("morgan");
 // Configure CORS para permitir localhost e a URL de produção
 app.use(cors({
-  origin: 'https://fspp-git-master-heinrick7s-projects.vercel.app' // Apenas aceita requisições deste domínio
+  origin: 'https://fspp-git-master-heinrick7s-projects.vercel.app',
+  methods: ['GET', 'POST', 'OPTIONS'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+  credentials: true // Permite cookies de cross-site
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
