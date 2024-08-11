@@ -1,30 +1,29 @@
-import express from "express";
-import cors from "cors";
-import morgan from "morgan";
-import { errorHandler } from "./middleware/errorMiddleware";
-import authRoutes from "./routes/authRoutes";
-import pacienteRoutes from "./routes/pacienteRoutes";
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import { errorHandler } from './middleware/errorMiddleware';
+import authRoutes from './routes/authRoutes';
+import pacienteRoutes from './routes/pacienteRoutes';
 
 const app = express();
 
-// Configuração do CORS
 const corsOptions = {
-  origin: "https://fspp-git-master-heinrick7s-projects.vercel.app", // Permite requisições somente deste origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Métodos permitidos
-  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept", // Cabeçalhos permitidos
-  credentials: true // Permite cookies e dados de autenticação
+  origin: ['http://localhost:3000', 'https://fspp-git-master-heinrick7s-projects.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 204,
 };
 
-app.use(cors(corsOptions)); // Aplica as configurações CORS
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev")); // Logging
+app.use(morgan('dev'));
 
-// Rotas
-app.use("/api/v1", authRoutes);
-app.use("/api/v1", pacienteRoutes);
+app.use('/api/v1', authRoutes);
+app.use('/api/v1', pacienteRoutes);
 
-// Tratamento de Erros
 app.use(errorHandler);
 
 export default app;
