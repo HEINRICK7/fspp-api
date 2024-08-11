@@ -1,0 +1,23 @@
+# Usar uma imagem base do Node.js
+FROM node:16
+
+# Definir diretório de trabalho dentro do container
+WORKDIR /usr/src/app
+
+# Copiar o arquivo 'package.json' e 'package-lock.json' (se disponível)
+COPY package*.json ./
+
+# Instalar dependências do projeto
+RUN npm install
+
+# Copiar todos os outros arquivos necessários para o diretório de trabalho
+COPY . .
+
+# Definir a variável de ambiente NIXPACKS_PATH
+ENV NIXPACKS_PATH=/usr/src/app
+
+# Expor a porta que a aplicação vai rodar
+EXPOSE 8080
+
+# Comando para rodar a aplicação
+CMD ["node", "index.js"]
