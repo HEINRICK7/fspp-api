@@ -10,7 +10,7 @@ const app = express();
 // Configure CORS para permitir localhost e a URL de produção
 const corsOptions = {
   origin: function (origin: any, callback: any) {
-    const allowedOrigins = ['https://fspp-git-master-heinrick7s-projects.vercel.app', 'http://localhost:3000'];
+    const allowedOrigins = ['https://fspp-api.onrender.com', 'http://localhost:3000'];
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
