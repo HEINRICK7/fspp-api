@@ -1,13 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-// Interface para os Serviços Prestados
-interface IService {
-  date: Date;
-  responsible: string;
-  description: string;
-}
-
-// Interface para o Paciente
 export interface IPaciente extends Document {
   nome: string;
   cpf: string;
@@ -28,25 +20,24 @@ export interface IPaciente extends Document {
   };
   ams: string;
   dataRegistro: Date;
-  servicosPrestados: IService[]; // Adicionando serviços prestados ao modelo
+  servicosPrestados: {
+    date: Date;
+    responsible: string;
+    description: string;
+  }[];
+  email?: string; // Torne o campo opcional, sem 'unique: true'
 }
 
-const ServiceSchema = new Schema<IService>({
-  date: { type: Date, required: true },
-  responsible: { type: String, required: true },
-  description: { type: String, required: true },
-});
-
-const PacienteSchema = new Schema({
+const PacienteSchema: Schema = new Schema({
   nome: { type: String, required: true },
   cpf: { type: String, required: true, unique: true },
   sexo: { type: String, required: true },
-  estadoCivil: { type: String, required: false },
-  idade: { type: Number, required: false },
-  naturalidade: { type: String, required: false },
-  profissao: { type: String, required: false },
-  nomeMae: { type: String, required: false },
-  nomePai: { type: String, required: false },
+  estadoCivil: { type: String, required: true },
+  idade: { type: Number, required: true },
+  naturalidade: { type: String, required: true },
+  profissao: { type: String, required: true },
+  nomeMae: { type: String, required: true },
+  nomePai: { type: String, required: true },
   endereco: {
     rua: { type: String, required: true },
     numero: { type: String, required: true },
@@ -57,8 +48,14 @@ const PacienteSchema = new Schema({
   },
   ams: { type: String, required: true },
   dataRegistro: { type: Date, required: true },
-  servicosPrestados: { type: [ServiceSchema], required: false },
-  email: { type: String, required: false },  // Relacionando o array de serviços prestados
+  servicosPrestados: [
+    {
+      date: { type: Date, required: true },
+      responsible: { type: String, required: true },
+      description: { type: String, required: true },
+    }
+  ],
+  email: { type: String } // Sem 'unique: true'
 });
 
-export default model<IPaciente>('Paciente', PacienteSchema);
+export default mongoose.model<IPaciente>('Paciente', PacienteSchema);
