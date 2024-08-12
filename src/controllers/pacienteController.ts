@@ -45,15 +45,30 @@ export const criarPaciente = async (req: Request, res: Response): Promise<Respon
 };
 
 
-// Listar todos os pacientes
+// Listar todos os pacientes com filtros opcionais por CPF e Nome
 export const listarPacientes = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const pacientes = await Paciente.find();
+    const { cpf, nome } = req.query;
+    let query: any = {};
+
+    // Adiciona o filtro por CPF se fornecido
+    if (cpf) {
+      query.cpf = new RegExp(cpf as string, 'i'); // Insensível a maiúsculas e minúsculas, suporta busca parcial
+    }
+
+    // Adiciona o filtro por Nome se fornecido
+    if (nome) {
+      query.nome = new RegExp(nome as string, 'i'); // Insensível a maiúsculas e minúsculas, suporta busca parcial
+    }
+
+    // Busca os pacientes com base na query construída
+    const pacientes = await Paciente.find(query);
     return res.status(200).json(pacientes);
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao listar pacientes', error });
   }
 };
+
 
 
 // Obter um paciente pelo ID
