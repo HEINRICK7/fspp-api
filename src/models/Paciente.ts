@@ -1,5 +1,13 @@
 import { Schema, model, Document } from 'mongoose';
 
+// Interface para os Serviços Prestados
+interface IService {
+  date: Date;
+  responsible: string;
+  description: string;
+}
+
+// Interface para o Paciente
 export interface IPaciente extends Document {
   nome: string;
   cpf: string;
@@ -20,7 +28,14 @@ export interface IPaciente extends Document {
   };
   ams: string;
   dataRegistro: Date;
+  servicosPrestados: IService[]; // Adicionando serviços prestados ao modelo
 }
+
+const ServiceSchema = new Schema<IService>({
+  date: { type: Date, required: true },
+  responsible: { type: String, required: true },
+  description: { type: String, required: true },
+});
 
 const PacienteSchema = new Schema({
   nome: { type: String, required: true },
@@ -42,6 +57,7 @@ const PacienteSchema = new Schema({
   },
   ams: { type: String, required: true },
   dataRegistro: { type: Date, required: true },
+  servicosPrestados: { type: [ServiceSchema], required: false }, // Relacionando o array de serviços prestados
 });
 
 export default model<IPaciente>('Paciente', PacienteSchema);

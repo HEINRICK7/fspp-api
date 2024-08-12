@@ -16,7 +16,8 @@ export const criarPaciente = async (req: Request, res: Response): Promise<Respon
       nomePai,
       endereco,
       ams,
-      dataRegistro
+      dataRegistro,
+      servicosPrestados,
     } = req.body;
 
     const novoPaciente: IPaciente = new Paciente({
@@ -32,6 +33,7 @@ export const criarPaciente = async (req: Request, res: Response): Promise<Respon
       endereco,
       ams,
       dataRegistro,
+      servicosPrestados, // Adicionando os serviços prestados
     });
 
     await novoPaciente.save();
