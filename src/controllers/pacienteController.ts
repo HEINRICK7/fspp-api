@@ -4,13 +4,34 @@ import Paciente, { IPaciente } from '../models/Paciente';
 // Criar um novo paciente
 export const criarPaciente = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { nome, email, telefone, dataNascimento } = req.body;
+    const {
+      nome,
+      cpf,
+      sexo,
+      estadoCivil,
+      idade,
+      naturalidade,
+      profissao,
+      nomeMae,
+      nomePai,
+      endereco,
+      ams,
+      dataRegistro
+    } = req.body;
 
     const novoPaciente: IPaciente = new Paciente({
       nome,
-      email,
-      telefone,
-      dataNascimento
+      cpf,
+      sexo,
+      estadoCivil,
+      idade,
+      naturalidade,
+      profissao,
+      nomeMae,
+      nomePai,
+      endereco,
+      ams,
+      dataRegistro,
     });
 
     await novoPaciente.save();
@@ -20,6 +41,7 @@ export const criarPaciente = async (req: Request, res: Response): Promise<Respon
     return res.status(500).json({ message: 'Erro ao criar paciente', error });
   }
 };
+
 
 // Listar todos os pacientes
 export const listarPacientes = async (req: Request, res: Response): Promise<Response> => {
@@ -31,6 +53,7 @@ export const listarPacientes = async (req: Request, res: Response): Promise<Resp
   }
 };
 
+
 // Obter um paciente pelo ID
 export const obterPaciente = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -41,6 +64,21 @@ export const obterPaciente = async (req: Request, res: Response): Promise<Respon
     return res.status(200).json(paciente);
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao obter paciente', error });
+  }
+};
+// Obter paciente pelo CPF
+export const obterPacientePorCPF = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { cpf } = req.params;
+    const paciente = await Paciente.findOne({ cpf });
+
+    if (!paciente) {
+      return res.status(404).json({ message: 'Paciente não encontrado' });
+    }
+
+    return res.status(200).json(paciente);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao buscar paciente', error });
   }
 };
 
