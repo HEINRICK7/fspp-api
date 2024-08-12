@@ -10,11 +10,11 @@ import {
 
 const router = Router();
 
-router.post('/pacientes', criarPaciente); // Criar um novo paciente
-router.get('/pacientes', listarPacientes); // Listar todos os pacientes
-router.get('/pacientes/:id', obterPaciente); // Obter um paciente pelo ID
+router.post('/pacientes', criarPaciente);
+router.get('/pacientes', listarPacientes);
+router.get('/pacientes/:id', obterPaciente);
 router.get('/paciente/cpf/:cpf', obterPacientePorCPF);
 router.put('/paciente/cpf/:cpf', atualizarPacientePorCPF);
-router.delete('/pacientes/:id', excluirPaciente); // Excluir um paciente pelo ID
+router.delete('/pacientes/:id', excluirPaciente);
 
 export default router;

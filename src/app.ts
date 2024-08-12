@@ -8,7 +8,7 @@ import pacienteRoutes from './routes/pacienteRoutes';
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://fspp-git-master-heinrick7s-projects.vercel.app'],
+  origin: ['http://localhost:3000', 'https://fspp.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
