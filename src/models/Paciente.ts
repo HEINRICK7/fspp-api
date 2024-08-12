@@ -57,7 +57,8 @@ const PacienteSchema = new Schema({
   },
   ams: { type: String, required: true },
   dataRegistro: { type: Date, required: true },
-  servicosPrestados: { type: [ServiceSchema], required: false }, // Relacionando o array de serviços prestados
+  servicosPrestados: { type: [ServiceSchema], required: false },
+  email: { type: String, required: false },  // Relacionando o array de serviços prestados
 });
 
 export default model<IPaciente>('Paciente', PacienteSchema);
