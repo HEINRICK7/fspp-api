@@ -84,18 +84,22 @@ export const obterPacientePorCPF = async (req: Request, res: Response): Promise<
   }
 };
 
-// Atualizar um paciente pelo ID
-export const atualizarPaciente = async (req: Request, res: Response): Promise<Response> => {
+// Atualizar um paciente pelo CPF
+export const atualizarPacientePorCPF = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const pacienteAtualizado = await Paciente.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { cpf } = req.params;
+    const pacienteAtualizado = await Paciente.findOneAndUpdate({ cpf }, req.body, { new: true });
+
     if (!pacienteAtualizado) {
       return res.status(404).json({ message: 'Paciente não encontrado' });
     }
+
     return res.status(200).json(pacienteAtualizado);
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao atualizar paciente', error });
   }
 };
+
 
 // Excluir um paciente pelo ID
 export const excluirPaciente = async (req: Request, res: Response): Promise<Response> => {
